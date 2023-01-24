@@ -6,67 +6,51 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:34:12 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/23 16:30:17 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/01/24 16:07:45 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "philo.h"
 
-// void	philo_eat(t_param *param)
-// {
-	
-// }
-
-long long	get_timestamp()
-{
-	struct timeval current_time;
-	
-	gettimeofday(&current_time, NULL);
-	printf("time is %ld\n",(current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
-	return ((current_time.tv_sec *1000)- (current_time.tv_usec / 1000));
-	
-}
-void	philo_sleep(t_param *param)
-{
-	get_timestamp();
-	
-}
-
-
 void	*execute_tasks(void *arg)
 {
-	t_param *param;
-	param = arg;
-	printf("Philo # %d calling\n", *(int*)arg);
-	philo_sleep(param);
-	free (arg);
+	t_philo *philo;
+	int i;
+	
+	philo = arg;
+	i = 0;
+	while (i < philo->param->nb_philo_must_eat)
+	{
+		philo_sleep(philo);
+		// philo_think(philo);
+	}
+	if (philo->philo_nb == 3)
+		smart_sleep(philo->param, philo->param->time_to_sleep);
+	calculate_timestamp_milliseconds(philo->param);
 	return (0);
 }
+
 
 void	create_threads(t_param *param)
 {
 	pthread_t p[param->nb_of_philos];
 	int i;
-	int *a;
-
-	i = 1;
-	while (i <= param->nb_of_philos)
+	
+	i = 0;
+	while (i < param->nb_of_philos)
 	{
-		a = malloc(sizeof(int));
-		*a = i;
-		if (pthread_create(&p[i], NULL, &execute_tasks, a) != 0)
+		if (pthread_create(&p[i], NULL, &execute_tasks, param->philo[i]) != 0)
 			printf("Thread not created");
 		i++;
 	}
-	i = 1;
-	while (i <= param->nb_of_philos)
+	i = 0;
+	while (i < param->nb_of_philos)
 	{
 		if(pthread_join(p[i], NULL) != 0)
 			printf("Failed to join thread");
 		i++;
 	}
 }
-
 
 void	philosophers(t_param *param)
 {	
@@ -78,13 +62,16 @@ int main (int argc, char **argv)
 {
 	t_param *param;
 	
-	param = malloc(sizeof (param));
+	param = malloc(sizeof(t_param));
 	if (!param)
-		return (1);
-	// check_input(argc, argv);
-	// allocate_memory(param);
+		clean_up(param);
+	
+	// if (!(check_input(argc, argv))
+	// 	clean_up(param);
+	// allocate_memory();
 	init_variables(param, argc, argv);
+	allocate_philo(param);
 	init_philo(param);
 	philosophers(param);
-	// clean_up(param);
+	clean_up(param);
 }
