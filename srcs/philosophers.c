@@ -16,21 +16,25 @@ void	*execute_tasks(void *arg)
 {
 	t_philo *philo;
 	int i;
-	
+
 	philo = arg;
 	i = 0;
-	while (i < philo->param->nb_philo_must_eat)
+	// while (philo->param->philo_died == false)
+	while (i < philo->param->nb_of_philos)
 	{
 		philo_sleep(philo);
-		// philo_think(philo);
+		philo_eat(philo);
+		// i++;
 	}
-	if (philo->philo_nb == 3)
-		smart_sleep(philo->param, philo->param->time_to_sleep);
 	calculate_timestamp_milliseconds(philo->param);
 	return (0);
 }
 
-
+/* P_thread join is making pthread create wait for the termination of the thread. After
+*	return from pthread_join, we know the thread has finished its execution. You need two
+*	while loops one for create, one for join, else ther won't be any threads working in
+*	parallel, but only consecutively.
+*/
 void	create_threads(t_param *param)
 {
 	pthread_t p[param->nb_of_philos];
@@ -44,10 +48,15 @@ void	create_threads(t_param *param)
 		i++;
 	}
 	i = 0;
+	check_starvation(param);
+	printf("Failed to join thread");
 	while (i < param->nb_of_philos)
 	{
 		if(pthread_join(p[i], NULL) != 0)
+		{
 			printf("Failed to join thread");
+		}
+		// printf("Thread %d has finished its execution\n", param->philo[i]->philo_nb);
 		i++;
 	}
 }
