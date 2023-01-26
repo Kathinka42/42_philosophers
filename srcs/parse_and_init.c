@@ -12,6 +12,12 @@
 
 #include "philo.h"
 
+// int	ft_atoi(char *str)
+// {
+
+// }
+
+
 // void	check_input(int argc, char **argv, t_param *param)
 // {
 // 	if (argc != 5 && argc != 6)
@@ -41,11 +47,11 @@ void init_variables(t_param *param, int argc, char **argv)
 	// if (argc == 6)
 	// 	param->nb_philo_must_eat = ft_atoi(argv[5]);
 	// else
-	param->nb_philo_must_eat = 30;
+	param->nb_philo_must_eat = 2;
 	param->start_time = get_timestamp_milliseconds();
 	param->timestamp = 0;
-	if (pthread_mutex_init(&param->write, NULL))
-			clean_up(param);
+	param->philo_died = false;
+	init_mutexes(param);
 }
 
 /*	INIT_PHILO
@@ -73,6 +79,7 @@ void	init_philo(t_param *param)
 		// printf("Philo right_fork is %d\n", param->philo[i]->right_fork);
 		param->philo[i]->param = param;
 		param->philo[i]->last_meal = 0;
+		param->philo[i]->nb_of_meals = 0;
 		i++;
 	}
 	param->philo[0]->left_fork = param->nb_of_philos;
