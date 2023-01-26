@@ -28,22 +28,22 @@ typedef struct s_philo
 	int				nb_of_meals;
 	long long		last_meal;
 	struct s_param	*param;
-	pthread_mutex_t	think;
 } t_philo;
 
 typedef struct s_param
 {
-	int			nb_of_philos;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			nb_philo_must_eat;
-	bool		philo_died;
-	long long	timestamp;
-	long long	start_time;
+	int				nb_of_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				nb_philo_must_eat;
+	bool			philo_died;
+	long long		timestamp;
+	long long		start_time;
 	pthread_mutex_t write;
 	pthread_mutex_t	*forks;
-	t_philo		**philo;
+	pthread_mutex_t	last_meal_check;
+	t_philo			**philo;
 } t_param;
 
 // manage_memory and initializze variables
