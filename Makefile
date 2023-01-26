@@ -38,7 +38,8 @@ SRCS_F		=	philosophers.c \
 				parse_and_init.c \
 				manage_memory.c \
 				manage_time.c \
-				philo_states.c \
+				philo_actions.c \
+				philo_print.c
 			  
 SRCS_O		= $(addprefix $(OBJS_D)/, $(SRCS_F:%.c=%.o))
 
