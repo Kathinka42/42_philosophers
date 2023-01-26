@@ -12,6 +12,40 @@
 
 # include "philo.h"
 
+void init_mutexes(t_param *param)
+{
+	int i;
+
+	i = 0;
+	param->forks = malloc(sizeof(pthread_mutex_t) * param->nb_of_philos);
+	if (!param->forks)
+		clean_up(param);
+	// exit (0);
+	while (i < param->nb_of_philos)
+	{
+		if(pthread_mutex_init(&param->forks[i], NULL))
+			clean_up(param);
+		i++;
+	}
+	if (pthread_mutex_init(&param->write, NULL))
+		clean_up(param);
+}
+
+void	destroy_mutexes(t_param *param)
+{
+	int i;
+
+	pthread_mutex_destroy(&param->write);
+	i = 0;
+	while (i < param->nb_of_philos && &param->forks[i] != NULL)
+	{
+		pthread_mutex_destroy(&param->forks[i]);
+		i++;
+	}
+	free (param->forks);
+}
+
+
 /*	ALLOCATE_PHILO
 *	---------------
 *	Function allocates an array of structs t_philo *, that holds a spot for a
