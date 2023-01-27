@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 11:36:41 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/24 14:37:33 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/01/27 14:18:35 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ long long	get_timestamp_milliseconds()
 
 long long	calculate_timestamp_milliseconds(t_param *param)
 {
+	// pthread_mutex_lock(&param->write);
 	param->timestamp = get_timestamp_milliseconds() - param->start_time;
+	// pthread_mutex_unlock(&param->write);
 	// printf("timestamp is %lld\n", get_timestamp_milliseconds() - param->start_time);
 	return (get_timestamp_milliseconds() - param->start_time);
 }
