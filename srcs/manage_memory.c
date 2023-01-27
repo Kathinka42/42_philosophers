@@ -6,11 +6,17 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:49:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/24 15:37:15 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/01/27 14:14:41 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "philo.h"
+
+/*	INIT_MUTEXES
+*	---------------
+*	Function allocates memory for mutexes array. Then uses mutex_init to
+*	allocate memory for each individual mutex.
+*/
 
 void init_mutexes(t_param *param)
 {
@@ -24,18 +30,32 @@ void init_mutexes(t_param *param)
 	while (i < param->nb_of_philos)
 	{
 		if(pthread_mutex_init(&param->forks[i], NULL))
+		{
+			write(2, "Initialization of mutex failed\n", 31);
 			clean_up(param);
+		}
 		i++;
 	}
-	if (pthread_mutex_init(&param->write, NULL))
+	if (pthread_mutex_init(&param->write, NULL) \
+		|| pthread_mutex_init(&param->time, NULL))
+	{
+		write(2, "Initialization of mutex failed\n", 31);
 		clean_up(param);
+	}
 }
+
+/*	DESTROY_MUTEXES
+*	---------------
+*	Function deallocates all memory that was allocated for mutexes.
+*	Lib function pthread_mutex_destroy mainly takes care of it.
+*/
 
 void	destroy_mutexes(t_param *param)
 {
 	int i;
 
 	pthread_mutex_destroy(&param->write);
+	pthread_mutex_destroy(&param->time);
 	i = 0;
 	while (i < param->nb_of_philos && &param->forks[i] != NULL)
 	{
@@ -44,7 +64,6 @@ void	destroy_mutexes(t_param *param)
 	}
 	free (param->forks);
 }
-
 
 /*	ALLOCATE_PHILO
 *	---------------
@@ -80,7 +99,7 @@ int	clean_up(t_param *param)
 	int i;
 
 	i = 0;
-	if (param->philo && param)
+	if (param && param->philo)
 	{
 		while (i < param->nb_of_philos && param->philo[i] != NULL)
 		{
@@ -89,7 +108,9 @@ int	clean_up(t_param *param)
 		}
 		free (param->philo);
 	}
+	destroy_mutexes(param);
 	if (param)
 		free (param);
+	system ("leaks philo");
 	exit (0);
 }
