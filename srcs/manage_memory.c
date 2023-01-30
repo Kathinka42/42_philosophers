@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:49:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/27 14:14:41 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/01/30 13:51:20 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void init_mutexes(t_param *param)
 		i++;
 	}
 	if (pthread_mutex_init(&param->write, NULL) \
-		|| pthread_mutex_init(&param->time, NULL))
+		|| pthread_mutex_init(&param->eat, NULL))
 	{
 		write(2, "Initialization of mutex failed\n", 31);
 		clean_up(param);
@@ -55,7 +55,7 @@ void	destroy_mutexes(t_param *param)
 	int i;
 
 	pthread_mutex_destroy(&param->write);
-	pthread_mutex_destroy(&param->time);
+	pthread_mutex_destroy(&param->eat);
 	i = 0;
 	while (i < param->nb_of_philos && &param->forks[i] != NULL)
 	{

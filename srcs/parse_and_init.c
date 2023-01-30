@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:42:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/30 09:09:09 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/01/30 15:10:42 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,15 @@ void init_variables(t_param *param, int argc, char **argv)
 	// param->time_to_die = ft_atoi(argv[2]);
 	// param->time_to_eat = ft_atoi(argv[3]);
 	// param->time_to_sleep = ft_atoi(argv[4]);
-	param->nb_of_philos = 5;
-	param->time_to_die = 410;
+	param->nb_of_philos = 4;
+	param->time_to_die = 310;
 	param->time_to_eat = 200;
 	param->time_to_sleep = 200;
 	// if (argc == 6)
 	// 	param->nb_philo_must_eat = ft_atoi(argv[5]);
 	// else
-	param->nb_philo_must_eat = 2;
-	param->start_time = get_timestamp_milliseconds();
-	param->timestamp = 0;
+	param->nb_philo_must_eat = 7;
+	param->start_time = get_timestamp_milliseconds(param);
 	param->philo_died = false;
 	param->nb_meals_reached = false;
 }
@@ -110,7 +109,6 @@ void	init_philo(t_param *param)
 		param->philo[i]->param = param;
 		param->philo[i]->last_meal = 0;
 		param->philo[i]->nb_of_meals = 0;
-		param->philo[i]->nb_philo_must_eat = param->nb_philo_must_eat;
 		i++;
 	}
 	param->philo[param->nb_of_philos - 1]->right_fork = 0;

@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 10:03:49 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/27 14:14:24 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/01/30 14:29:59 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <stdbool.h>
+#include <string.h>
 
 typedef struct s_philo
 {
@@ -26,7 +27,6 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	int				nb_of_meals;
-	int				nb_philo_must_eat;
 	long long		last_meal;
 	struct s_param	*param;
 } t_philo;
@@ -40,9 +40,8 @@ typedef struct s_param
 	int				nb_philo_must_eat;
 	bool			philo_died;
 	bool			nb_meals_reached;
-	long long		timestamp;
 	long long		start_time;
-	pthread_mutex_t time;
+	pthread_mutex_t eat;
 	pthread_mutex_t write;
 	pthread_mutex_t	*forks;
 	t_philo			**philo;
@@ -60,7 +59,7 @@ void		destroy_mutexes(t_param *param);
 
 // manage time
 long long	calculate_timestamp_milliseconds(t_param *param);
-long long	get_timestamp_milliseconds();
+long long	get_timestamp_milliseconds(t_param *param);
 void		smart_sleep(t_param *param, long long time);
 
 // execute actions

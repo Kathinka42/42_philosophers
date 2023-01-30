@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:34:12 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/30 09:17:56 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/01/30 16:32:33 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,36 +24,30 @@
 void	*execute_tasks(void *arg)
 {
 	t_philo *philo;
-	int i;
 
 	philo = arg;
-	i = 0;
-	// while (i < philo->param->nb_of_philos)
-	// {
-		if (philo->philo_nb % 2)
-			smart_sleep(philo->param, 5);
-	// 	i++;
-	// }
-	// while (philo->param->philo_died == false || philo->param->nb_meals_reached == false)
-	while (philo->param->philo_died == false)
+	if (philo->philo_nb % 2)
+			smart_sleep(philo->param, 50);
+	while (philo->param->philo_died == false && philo->param->nb_meals_reached == false)
 	{
-		philo_eat(philo);
-		philo_sleep(philo);
 		philo_think(philo);
+		if (philo->param->philo_died == false)
+			philo_eat(philo);
+		philo_sleep(philo);
 	}
-	// calculate_timestamp_milliseconds(philo->param);
-	return (0);
+	return (NULL);
 }
 
-/*	CREATE_THREADS
-*	---------------
-*	P_thread join is making pthread create wait for the termination of the thread. After
-*	return from pthread_join, we know the thread has finished its execution. You need two
-*	while loops one for create, one for join, else there won't be any threads working in
-*	parallel, but only consecutively.
+/*	PHILOSOPHERS
+*	-------------
+*	function to create the threads. After return from pthread_join, we know the
+*	thread has finished its execution. You need two while loops one for create,
+*	one for join, else	there won't be any threads working in parallel, but
+*	only consecutively.
 */
-void	create_threads(t_param *param)
-{
+
+void	philosophers(t_param *param)
+{	
 	pthread_t p[param->nb_of_philos];
 	int i;
 	
@@ -66,21 +60,19 @@ void	create_threads(t_param *param)
 	}
 	i = 0;
 	check_exit(param);
-	// printf("Failed to join thread");
 	while (i < param->nb_of_philos)
 	{
 		if(pthread_join(p[i], NULL) != 0)
 			write(STDERR_FILENO, "Failed to join thread", 21);
-		// printf("Thread %d has finished its execution\n", param->philo[i]->philo_nb);
 		i++;
 	}
 }
 
-void	philosophers(t_param *param)
-{	
-	create_threads(param);
-
-}
+/*	MAIN
+*	------
+*	Calls functions to initialize variables and to allocate memory, as well
+*	as function to clean up after execution of the program.
+*/
 
 int main (int argc, char **argv)
 {
@@ -99,4 +91,5 @@ int main (int argc, char **argv)
 	init_philo(param);
 	philosophers(param);
 	clean_up(param);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 11:36:41 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/27 14:18:35 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/01/30 14:32:31 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 *	microseconds since the last whole second.
 */
 
-long long	get_timestamp_milliseconds()
+long long	get_timestamp_milliseconds(t_param *param)
 {
 	struct timeval current_time;
 	long long	milliseconds;
@@ -38,11 +38,7 @@ long long	get_timestamp_milliseconds()
 
 long long	calculate_timestamp_milliseconds(t_param *param)
 {
-	// pthread_mutex_lock(&param->write);
-	param->timestamp = get_timestamp_milliseconds() - param->start_time;
-	// pthread_mutex_unlock(&param->write);
-	// printf("timestamp is %lld\n", get_timestamp_milliseconds() - param->start_time);
-	return (get_timestamp_milliseconds() - param->start_time);
+	return (get_timestamp_milliseconds(param) - param->start_time);
 }
 
 /*	SMART_SLEEP
@@ -52,10 +48,10 @@ long long	calculate_timestamp_milliseconds(t_param *param)
 void	smart_sleep(t_param *param, long long time)
 {
 	long long i;
-	i = get_timestamp_milliseconds();
+	i = get_timestamp_milliseconds(param);
 	while (1)
 	{
-		if ((get_timestamp_milliseconds() - i) >= time)
+		if ((get_timestamp_milliseconds(param) - i) >= time)
 			break;
 		usleep (50);
 	}
