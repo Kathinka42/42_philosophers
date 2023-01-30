@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:34:12 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/27 13:59:40 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/01/30 09:17:56 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ void	*execute_tasks(void *arg)
 
 	philo = arg;
 	i = 0;
-	while (i < philo->param->nb_of_philos)
-	{
+	// while (i < philo->param->nb_of_philos)
+	// {
 		if (philo->philo_nb % 2)
 			smart_sleep(philo->param, 5);
-		i++;
-	}
-	while (philo->param->philo_died == false || philo->param->nb_meals_reached == false)
+	// 	i++;
+	// }
+	// while (philo->param->philo_died == false || philo->param->nb_meals_reached == false)
+	while (philo->param->philo_died == false)
 	{
 		philo_eat(philo);
 		philo_sleep(philo);
