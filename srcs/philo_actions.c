@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 09:49:16 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/27 14:15:55 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/01/30 09:33:18 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	philo_sleep(t_philo *philo)
 {
-	philo->param->timestamp = calculate_timestamp_milliseconds(philo->param);
+	// philo->param->timestamp = calculate_timestamp_milliseconds(philo->param);
 	philo_print(philo, "is sleeping");
 	smart_sleep(philo->param, philo->param->time_to_sleep);
 	return (0);
@@ -72,21 +72,16 @@ int	check_exit(t_param *param)
 				philo_print(param->philo[i], "died");
 				clean_up(param);
 			}
-			// if (param->philo[i]->nb_of_meals == param->philo[i]->nb_philo_must_eat)
-			// {
-			// 	param->nb_meals_reached = true;
-			// 	clean_up(param);
-			// }
 			i++;
 		}
 		i = 0;
-		// while (i < param->nb_of_philos)
-		// {
-			
-		// }
-		// i++
+		while (i < param->nb_of_philos && param->philo[i]->nb_of_meals >= param->nb_philo_must_eat)
+			i++;
+		if (i == param->nb_of_philos)
+		{
+			param->nb_meals_reached = true;
+			clean_up(param);
+		}
 	}
-	// i = 0;
 	return (0);
-	
 }
