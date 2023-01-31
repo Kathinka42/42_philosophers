@@ -39,13 +39,14 @@ SRCS_F		=	philosophers.c \
 				manage_memory.c \
 				manage_time.c \
 				philo_actions.c \
-				philo_print.c
+				philo_print.c \
+				check_exit.c
 			  
 SRCS_O		= $(addprefix $(OBJS_D)/, $(SRCS_F:%.c=%.o))
 
 # compilation rules and flags
 CC			= gcc -pthread -g
-#CFLAGS		= -Wall -Wextra -Werror
+# CFLAGS		= -Wall -Wextra -Werror
 
 #-fsanitize=address
 ifdef DEBUGG
@@ -68,14 +69,6 @@ $(NAME):  $(OBJS_D) $(SRCS_O)
 $(OBJS_D)/%.o: $(SRCS_D)/%.c
 			@echo "$(CYAN)compiling: $(RESET) $<"
 			@$(CC) $(CFLAGS) -I $(INC_D) -c $< -o $@
-
-# -j option for multithreading
-$(LIBFT_LIB):
-	make -C $(LIBFT_D)
-
-# -j option for multithreading
-$(MLX_LIB):
-	make -C $(MLX_D)
 
 $(OBJS_D):
 	mkdir $@
