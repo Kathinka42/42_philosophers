@@ -41,7 +41,7 @@ typedef struct s_param
 	bool			philo_died;
 	bool			nb_meals_reached;
 	long long		start_time;
-	pthread_mutex_t eat;
+	pthread_mutex_t exit;
 	pthread_mutex_t write;
 	pthread_mutex_t	*forks;
 	t_philo			**philo;
@@ -60,7 +60,7 @@ void		destroy_mutexes(t_param *param);
 // manage time
 long long	calculate_timestamp_milliseconds(t_param *param);
 long long	get_timestamp_milliseconds(t_param *param);
-void		smart_sleep(t_param *param, long long time);
+int			smart_sleep(t_param *param, long long time);
 
 // execute actions
 int			philo_sleep(t_philo *philo);
@@ -68,5 +68,6 @@ int			philo_think(t_philo *philo);
 int			philo_eat(t_philo *philo);
 
 void		philo_print(t_philo *philo, char *str);
-int			check_exit(t_param *param);
+void		check_exit(t_param *param);
+void		check_death(t_param *param, int i);
 #endif
