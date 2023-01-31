@@ -27,14 +27,20 @@ void	*execute_tasks(void *arg)
 
 	philo = arg;
 	if (philo->philo_nb % 2)
-			smart_sleep(philo->param, 50);
-	while (philo->param->philo_died == false && philo->param->nb_meals_reached == false)
+			smart_sleep(philo->param, 100);
+	// while (philo->param->philo_died == false && philo->param->nb_meals_reached == false)
+	pthread_mutex_lock(&philo->param->exit);
+	while (philo->param->nb_meals_reached == false)
+	// while (1)
 	{
+		pthread_mutex_unlock(&philo->param->exit);
 		philo_think(philo);
-		if (philo->param->philo_died == false)
-			philo_eat(philo);
-		philo_sleep(philo);
+		if (philo_eat(philo))
+			return (NULL);
+		if (philo_sleep(philo))
+			return (NULL);
 	}
+	pthread_mutex_unlock(&philo->param->exit);
 	return (NULL);
 }
 
@@ -52,14 +58,16 @@ void	philosophers(t_param *param)
 	int i;
 	
 	i = 0;
+	// pthread_mutex_lock(&param->exit);
 	while (i < param->nb_of_philos)
 	{
 		if (pthread_create(&p[i], NULL, &execute_tasks, param->philo[i]) != 0)
 			write(STDERR_FILENO, "Thread not created", 18);
 		i++;
 	}
-	i = 0;
+	// pthread_mutex_unlock(&param->exit);
 	check_exit(param);
+	i = 0;
 	while (i < param->nb_of_philos)
 	{
 		if(pthread_join(p[i], NULL) != 0)
