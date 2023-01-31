@@ -74,7 +74,7 @@ void init_variables(t_param *param, int argc, char **argv)
 	// param->time_to_eat = ft_atoi(argv[3]);
 	// param->time_to_sleep = ft_atoi(argv[4]);
 	param->nb_of_philos = 4;
-	param->time_to_die = 310;
+	param->time_to_die = 410;
 	param->time_to_eat = 200;
 	param->time_to_sleep = 200;
 	// if (argc == 6)
