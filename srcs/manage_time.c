@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+# include "philo.h"
 
 /*	GET_TIMESSTAMP_MILLISECONDS
 *	----------------------------
@@ -43,16 +43,27 @@ long long	calculate_timestamp_milliseconds(t_param *param)
 
 /*	SMART_SLEEP
 *	-------------
-*	Function replaces the usleep function in this program.
+*	Function replaces the usleep function in this program. it constantly checks
+*	whether the value of the variable philo_died was set to "true". In this
+*	case function returns (1) immediately to inform the other functions about
+*	the death.
 */
-void	smart_sleep(t_param *param, long long time)
+int	smart_sleep(t_param *param, long long time)
 {
 	long long i;
 	i = get_timestamp_milliseconds(param);
 	while (1)
 	{
+		pthread_mutex_lock(&param->exit);
+		// if (param->philo_died == true || param->nb_meals_reached == true)
+		if (param->philo_died == true)
+		{
+			pthread_mutex_unlock(&param->exit);
+			return (1);
+		}
+		pthread_mutex_unlock(&param->exit);
 		if ((get_timestamp_milliseconds(param) - i) >= time)
-			break;
+			return (0);
 		usleep (50);
 	}
 }
