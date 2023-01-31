@@ -37,7 +37,7 @@ void init_mutexes(t_param *param)
 		i++;
 	}
 	if (pthread_mutex_init(&param->write, NULL) \
-		|| pthread_mutex_init(&param->eat, NULL))
+		|| pthread_mutex_init(&param->exit, NULL))
 	{
 		write(2, "Initialization of mutex failed\n", 31);
 		clean_up(param);
@@ -55,7 +55,7 @@ void	destroy_mutexes(t_param *param)
 	int i;
 
 	pthread_mutex_destroy(&param->write);
-	pthread_mutex_destroy(&param->eat);
+	pthread_mutex_destroy(&param->exit);
 	i = 0;
 	while (i < param->nb_of_philos && &param->forks[i] != NULL)
 	{
