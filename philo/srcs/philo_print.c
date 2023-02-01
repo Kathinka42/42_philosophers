@@ -6,11 +6,11 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:32:39 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/30 15:16:51 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/01 16:41:54 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+#include "philo.h"
 
 /*	PHILO_PRINT
 *	---------------
@@ -18,21 +18,22 @@
 *	mixed up log messages from several threads at the same time.
 */
 
-void	philo_print(t_philo *philo, char *str)
+int	philo_print(t_philo *philo, char *str)
 {
-	long long timestamp;
-	
+	long long	timestamp;
+
 	timestamp = 0;
 	pthread_mutex_lock(&philo->param->exit);
 	if (philo->param->philo_died == false)
 	{
-		pthread_mutex_unlock(&philo->param->exit);
-		pthread_mutex_lock(&philo->param->write);
 		timestamp = calculate_timestamp_milliseconds(philo->param);
 		printf ("%lld %d %s\n", timestamp, (philo->philo_nb + 1), str);
-		pthread_mutex_unlock(&philo->param->write);
+		pthread_mutex_unlock(&philo->param->exit);
+		return (0);
 	}
-	// else
-	// 	pthread_mutex_unlock(&philo->param->exit);
-	return ;
+	else
+	{
+		pthread_mutex_unlock(&philo->param->exit);
+		return (1);
+	}
 }
