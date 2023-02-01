@@ -6,23 +6,26 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:42:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/01 12:49:07 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/01 16:40:38 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
-
+/*	CHECK_INPUT
+*	---------------
+*	checks input from command line and returns error messages.
+*/
 
 int	check_input(int argc, char **argv, t_param *param)
 {
 	if (argc != 5 && argc != 6)
 	{
-		write(STDERR_FILENO, ERROR_1, 26);
+		write(STDERR_FILENO, ERROR_1, ft_strlen(ERROR_1));
 		return (1);
 	}
-	if (philo_atoi(argv[1]) < 0 || philo_atoi(argv[2]) < 0 || philo_atoi(argv[3]) < 0 || philo_atoi(argv[4]) < 0)
+	if (philo_atoi(argv[1]) < 0 || philo_atoi(argv[2]) < 0 || \
+		philo_atoi(argv[3]) < 0 || philo_atoi(argv[4]) < 0)
 	{
 		write (STDERR_FILENO, ERROR_2, ft_strlen(ERROR_2));
 		return (1);
@@ -35,22 +38,20 @@ int	check_input(int argc, char **argv, t_param *param)
 	return (0);
 }
 
-
 /*	INIT_VARIABLES
 *	---------------
 *	Initialize variables.
 */
 
-void init_variables(t_param *param, int argc, char **argv)
+void	init_variables(t_param *param, int argc, char **argv)
 {
 	param->nb_of_philos = philo_atoi(argv[1]);
 	param->time_to_die = philo_atoi(argv[2]);
 	param->time_to_eat = philo_atoi(argv[3]);
 	param->time_to_sleep = philo_atoi(argv[4]);
+	param->nb_philo_must_eat = -1;
 	if (argc == 6)
 		param->nb_philo_must_eat = philo_atoi(argv[5]);
-	else
-		param->nb_philo_must_eat = 7;
 	param->start_time = get_timestamp_milliseconds(param);
 	param->philo_died = false;
 	param->nb_meals_reached = false;
@@ -68,10 +69,10 @@ void init_variables(t_param *param, int argc, char **argv)
 
 void	init_philo(t_param *param)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
-	while(i < param->nb_of_philos)
+	while (i < param->nb_of_philos)
 	{
 		param->philo[i]->philo_nb = i;
 		param->philo[i]->left_fork = i;
