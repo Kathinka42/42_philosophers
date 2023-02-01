@@ -6,60 +6,34 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:42:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/30 15:10:42 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:49:07 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/*	FT_ATOI
-*	-------
-*	Original libft function.
-*/
 
-int	ft_atoi(const char *str)
+
+
+int	check_input(int argc, char **argv, t_param *param)
 {
-	int	i;
-	int	sign;
-	int	number;
-
-	i = 0;
-	sign = 1;
-	number = 0;
-	while (str[i] != '\0' && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
-			|| str[i] == '\r' || str[i] == '\v' || str[i] == '\f'))
-		i++;
-	if (str[i] == '-')
-			sign = sign * (-1);
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
+	if (argc != 5 && argc != 6)
 	{
-	number = number * 10 + str[i] - '0';
-	i++;
+		write(STDERR_FILENO, ERROR_1, 26);
+		return (1);
 	}
-	return (number * sign);
+	if (philo_atoi(argv[1]) < 0 || philo_atoi(argv[2]) < 0 || philo_atoi(argv[3]) < 0 || philo_atoi(argv[4]) < 0)
+	{
+		write (STDERR_FILENO, ERROR_2, ft_strlen(ERROR_2));
+		return (1);
+	}
+	if (argc == 6 && philo_atoi(argv[5]) < 0)
+	{
+		write (STDERR_FILENO, ERROR_2, ft_strlen(ERROR_2));
+		return (1);
+	}
+	return (0);
 }
-
-
-// void	check_input(int argc, char **argv, t_param *param)
-// {
-// 	if (argc != 5 && argc != 6)
-// 	{
-// 		write(STDERR_FILENO, "Wrong number of arguments\n", 26);
-// 		clean_up(param);
-// 	}
-// 	if (ft_atoi(argv[2]) < 0 || ft_atoi(argv[3]) < 0 || ft_atoi(argv[4]) < 0)
-// 	{
-// 		write (STDERR_FILENO, "Invalid argument", 16);
-// 		clean_up(param);
-// 	}
-// 	if (argc == 6 && ft_atoi(argv[5] < 0)
-// 	{
-// 		write (STDERR_FILENO, "Invalid argument", 16);
-// 		clean_up(param);
-// 	}
-// }
 
 
 /*	INIT_VARIABLES
@@ -69,18 +43,14 @@ int	ft_atoi(const char *str)
 
 void init_variables(t_param *param, int argc, char **argv)
 {
-	// param->nb_of_philos = ft_atoi(argv[1]);
-	// param->time_to_die = ft_atoi(argv[2]);
-	// param->time_to_eat = ft_atoi(argv[3]);
-	// param->time_to_sleep = ft_atoi(argv[4]);
-	param->nb_of_philos = 4;
-	param->time_to_die = 410;
-	param->time_to_eat = 200;
-	param->time_to_sleep = 200;
-	// if (argc == 6)
-	// 	param->nb_philo_must_eat = ft_atoi(argv[5]);
-	// else
-	param->nb_philo_must_eat = 7;
+	param->nb_of_philos = philo_atoi(argv[1]);
+	param->time_to_die = philo_atoi(argv[2]);
+	param->time_to_eat = philo_atoi(argv[3]);
+	param->time_to_sleep = philo_atoi(argv[4]);
+	if (argc == 6)
+		param->nb_philo_must_eat = philo_atoi(argv[5]);
+	else
+		param->nb_philo_must_eat = 7;
 	param->start_time = get_timestamp_milliseconds(param);
 	param->philo_died = false;
 	param->nb_meals_reached = false;
