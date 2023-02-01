@@ -6,7 +6,7 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 15:52:20 by kczichow          #+#    #+#              #
-#    Updated: 2023/01/24 16:14:12 by kczichow         ###   ########.fr        #
+#    Updated: 2023/02/01 11:05:00 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ RESET	= \033[0m
 # source and objects files
 
 SRCS_F		=	philosophers.c \
+				philo_utils.c \
 				parse_and_init.c \
 				manage_memory.c \
 				manage_time.c \
