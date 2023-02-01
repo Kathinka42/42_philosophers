@@ -6,11 +6,11 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:49:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/30 13:51:20 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/01 16:51:29 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+#include "philo.h"
 
 /*	INIT_MUTEXES
 *	---------------
@@ -18,30 +18,32 @@
 *	allocate memory for each individual mutex.
 */
 
-void init_mutexes(t_param *param)
+int	init_mutexes(t_param *param)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	param->forks = malloc(sizeof(pthread_mutex_t) * param->nb_of_philos);
+	param->forks = ft_calloc(sizeof(pthread_mutex_t), param->nb_of_philos);
 	if (!param->forks)
-		clean_up(param);
-	// exit (0);
+	{
+		write(2, ERROR_4, ft_strlen(ERROR_4));
+		return (1);
+	}
 	while (i < param->nb_of_philos)
 	{
-		if(pthread_mutex_init(&param->forks[i], NULL))
+		if (pthread_mutex_init (&param->forks[i], NULL))
 		{
-			write(2, "Initialization of mutex failed\n", 31);
-			clean_up(param);
+			write(2, ERROR_3, ft_strlen(ERROR_3));
+			return (1);
 		}
 		i++;
 	}
-	if (pthread_mutex_init(&param->write, NULL) \
-		|| pthread_mutex_init(&param->exit, NULL))
+	if (pthread_mutex_init(&param->exit, NULL))
 	{
-		write(2, "Initialization of mutex failed\n", 31);
-		clean_up(param);
+		write(2, ERROR_3, ft_strlen(ERROR_3));
+		return (1);
 	}
+	return (0);
 }
 
 /*	DESTROY_MUTEXES
@@ -52,9 +54,8 @@ void init_mutexes(t_param *param)
 
 void	destroy_mutexes(t_param *param)
 {
-	int i;
+	int	i;
 
-	pthread_mutex_destroy(&param->write);
 	pthread_mutex_destroy(&param->exit);
 	i = 0;
 	while (i < param->nb_of_philos && &param->forks[i] != NULL)
@@ -72,20 +73,28 @@ void	destroy_mutexes(t_param *param)
 *	philosopher.
 */
 
-void	allocate_philo(t_param *param)
+int	allocate_philo(t_param *param)
 {
-	int i;
-	
-	param->philo = malloc(sizeof(t_philo *) * param->nb_of_philos);
+	int	i;
+
+	param->philo = ft_calloc(sizeof(t_philo), param->nb_of_philos);
 	if (!param->philo)
-		clean_up(param);
-	i = 0;
-	while(i < param->nb_of_philos)
 	{
-		if (!(param->philo[i] = malloc(sizeof(t_philo))))
-			clean_up(param);
+		write (2, ERROR_4, ft_strlen(ERROR_4));
+		return (1);
+	}
+	i = 0;
+	while (i < param->nb_of_philos)
+	{
+		param->philo[i] = malloc(sizeof(t_philo));
+		if (!param->philo[i])
+		{
+			write (2, ERROR_4, ft_strlen(ERROR_4));
+			return (1);
+		}
 		i++;
 	}
+	return (0);
 }
 
 /*	CLEAN_UP
@@ -96,7 +105,7 @@ void	allocate_philo(t_param *param)
 
 int	clean_up(t_param *param)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (param && param->philo)
@@ -111,6 +120,5 @@ int	clean_up(t_param *param)
 	destroy_mutexes(param);
 	if (param)
 		free (param);
-	system ("leaks philo");
 	exit (0);
 }
