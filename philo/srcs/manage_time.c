@@ -6,11 +6,11 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 11:36:41 by kczichow          #+#    #+#             */
-/*   Updated: 2023/01/30 14:32:31 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:34:00 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+#include "philo.h"
 
 /*	GET_TIMESSTAMP_MILLISECONDS
 *	----------------------------
@@ -22,9 +22,9 @@
 
 long long	get_timestamp_milliseconds(t_param *param)
 {
-	struct timeval current_time;
-	long long	milliseconds;
-	
+	struct timeval	current_time;
+	long long		milliseconds;
+
 	gettimeofday(&current_time, NULL);
 	milliseconds = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
 	return (milliseconds);
@@ -50,18 +50,19 @@ long long	calculate_timestamp_milliseconds(t_param *param)
 */
 int	smart_sleep(t_param *param, long long time)
 {
-	long long i;
+	long long	i;
+
 	i = get_timestamp_milliseconds(param);
 	while (1)
 	{
 		pthread_mutex_lock(&param->exit);
-		// if (param->philo_died == true || param->nb_meals_reached == true)
 		if (param->philo_died == true)
 		{
 			pthread_mutex_unlock(&param->exit);
 			return (1);
 		}
-		pthread_mutex_unlock(&param->exit);
+		else
+			pthread_mutex_unlock(&param->exit);
 		if ((get_timestamp_milliseconds(param) - i) >= time)
 			return (0);
 		usleep (50);
