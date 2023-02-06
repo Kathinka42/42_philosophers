@@ -6,7 +6,7 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 15:52:20 by kczichow          #+#    #+#              #
-#    Updated: 2023/02/01 11:05:00 by kczichow         ###   ########.fr        #
+#    Updated: 2023/02/06 15:33:44 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS_F		=	philosophers.c \
 				manage_memory.c \
 				manage_time.c \
 				philo_actions.c \
+				dinner_for_one.c \
 				philo_print.c \
 				check_exit.c
 			  
