@@ -6,28 +6,21 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:34:12 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/01 17:29:30 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:59:18 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/*	EXECUTE_TASKS
-*	---------------
-*	Function is main handler for pthread_create. Philos with even IDs are sent
-*	to sleep, to slightly asynchronize the start times to avoid a deadlock.
-*	Then, execution functions are called in an unterminated loop, that only
-*	ends, when either one of the philosophers dies or all philosophers have
-*	eaten the given number of times.
+/*	ENJOY_DINNER
+*	-------------
+*	holds the while loop to call the think, eat and sleep functions.
+*	That loop ends, when either one of the philosophers dies or all
+*	philosophers have eaten the given number of times.
 */
 
-void	*execute_tasks(void *arg)
+void	enjoy_dinner(t_philo *philo)
 {
-	t_philo	*philo;
-
-	philo = arg;
-	if (philo->philo_nb % 2)
-		smart_sleep(philo->param, 10);
 	while (1)
 	{
 		pthread_mutex_lock(&philo->param->exit);
@@ -35,18 +28,42 @@ void	*execute_tasks(void *arg)
 		{
 			pthread_mutex_unlock(&philo->param->exit);
 			if (philo_think(philo))
-				return (NULL);
+				return ;
 			if (philo_eat(philo))
-				return (NULL);
+				return ;
 			if (philo_sleep(philo))
-				return (NULL);
+				return ;
 		}
 		else
 		{
 			pthread_mutex_unlock(&philo->param->exit);
-			return (NULL);
+			return ;
 		}
 	}
+}
+
+/*	EXECUTE_TASKS
+*	---------------
+*	Function is main handler for pthread_create. Philos with even IDs are sent
+*	to sleep, to slightly asynchronize the start times to avoid a deadlock.
+*	If there's only one philo, it calls a separate function.
+*/
+
+void	*execute_tasks(void *arg)
+{
+	t_philo	*philo;
+
+	philo = arg;
+	if (philo->param->nb_of_philos == 1)
+	{
+		dinner_for_one(philo);
+		return (NULL);
+	}
+	if (!philo->philo_nb % 2)
+		smart_sleep(philo->param, 20);
+	if (philo->param->nb_of_philos % 2 == 1 && philo->philo_nb == 3)
+		smart_sleep(philo->param, 60);
+	enjoy_dinner(philo);
 	return (NULL);
 }
 
