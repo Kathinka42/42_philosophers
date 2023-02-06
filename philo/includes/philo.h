@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 10:03:49 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/01 17:03:24 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:33:01 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,12 @@ long long		get_timestamp_milliseconds(t_param *param);
 int				smart_sleep(t_param *param, long long time);
 
 // execute actions
+void			dinner_for_one(t_philo *philo);
 int				philo_sleep(t_philo *philo);
 int				philo_think(t_philo *philo);
 int				philo_eat(t_philo *philo);
+void			philo_even_numbers(t_philo *philo);
+void			philo_eat_odd_numbers(t_philo *philo);
 
 int				philo_print(t_philo *philo, char *str);
 void			check_exit(t_param *param);
