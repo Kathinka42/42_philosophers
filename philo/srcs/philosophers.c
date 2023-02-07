@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:34:12 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/07 11:41:56 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:05:56 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	philosophers(t_param *param)
 			write(STDERR_FILENO, "Failed to join thread", 21);
 		i++;
 	}
+	free (p);
 }
 
 /*	MAIN
