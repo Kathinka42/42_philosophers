@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:34:12 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/06 15:59:18 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:41:56 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	main(int argc, char **argv)
 	param = ft_calloc(sizeof(t_param), 1);
 	if (!param)
 		clean_up(param);
-	if (check_input(argc, argv, param))
+	if (check_input(argc, argv))
 		clean_up(param);
 	init_variables(param, argc, argv);
 	if (init_mutexes(param))
