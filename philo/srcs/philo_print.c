@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:32:39 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/01 16:41:54 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:05:04 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	philo_print(t_philo *philo, char *str)
 
 	timestamp = 0;
 	pthread_mutex_lock(&philo->param->exit);
-	if (philo->param->philo_died == false)
+	if (philo->param->philo_died == false || !ft_strncmp(str, "died", 5))
 	{
 		timestamp = calculate_timestamp_milliseconds(philo->param);
 		printf ("%lld %d %s\n", timestamp, (philo->philo_nb + 1), str);
