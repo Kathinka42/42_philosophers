@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 10:03:49 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/07 13:20:29 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:42:08 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # define ERROR_2	"Error: invalid argument\n"
 # define ERROR_3	"Error: mutex initialization failed\n"
 # define ERROR_4	"Error: allocation failed\n"
-# define ERROR_5	"Error: thread joining in exec_sim failed\n"
 
 typedef struct s_philo
 {
