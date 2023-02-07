@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 10:03:49 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/06 15:33:01 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:44:33 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_param
 }	t_param;
 
 // manage_memory and initialize variables
-int				check_input(int argc, char **argv, t_param *param);
+int				check_input(int argc, char **argv);
 int				allocate_philo(t_param *param);
 int				init_mutexes(t_param *param);
 void			init_variables(t_param *param, int argc, char **argv);
@@ -82,5 +82,6 @@ void			check_death(t_param *param, int i);
 int				philo_atoi(const char *str);
 unsigned long	ft_strlen(const char *s);
 void			*ft_calloc(size_t	count, size_t	size);
+int				ft_strncmp(const char *str1, const char *str2, size_t n);
 
 #endif
