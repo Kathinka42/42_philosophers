@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 10:03:49 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/07 11:44:33 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:51:29 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void			destroy_mutexes(t_param *param);
 
 // manage time
 long long		calculate_timestamp_milliseconds(t_param *param);
-long long		get_timestamp_milliseconds(t_param *param);
+long long		get_timestamp_milliseconds();
 int				smart_sleep(t_param *param, long long time);
 
 // execute actions
