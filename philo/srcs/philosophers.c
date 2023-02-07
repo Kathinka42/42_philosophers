@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:34:12 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/07 12:05:56 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:27:56 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,12 @@ int	main(int argc, char **argv)
 	if (!param)
 		clean_up(param);
 	if (check_input(argc, argv))
-		clean_up(param);
+		return (clean_up(param));
 	init_variables(param, argc, argv);
 	if (init_mutexes(param))
-		clean_up (param);
+		return (clean_up (param));
 	if (allocate_philo(param))
-		clean_up (param);
+		return (clean_up (param));
 	init_philo(param);
 	philosophers(param);
 	clean_up(param);
