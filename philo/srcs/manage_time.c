@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 11:36:41 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/01 14:34:00 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:52:01 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 *	microseconds since the last whole second.
 */
 
-long long	get_timestamp_milliseconds(t_param *param)
+long long	get_timestamp_milliseconds()
 {
 	struct timeval	current_time;
 	long long		milliseconds;
@@ -38,7 +38,7 @@ long long	get_timestamp_milliseconds(t_param *param)
 
 long long	calculate_timestamp_milliseconds(t_param *param)
 {
-	return (get_timestamp_milliseconds(param) - param->start_time);
+	return (get_timestamp_milliseconds() - param->start_time);
 }
 
 /*	SMART_SLEEP
@@ -52,7 +52,7 @@ int	smart_sleep(t_param *param, long long time)
 {
 	long long	i;
 
-	i = get_timestamp_milliseconds(param);
+	i = get_timestamp_milliseconds();
 	while (1)
 	{
 		pthread_mutex_lock(&param->exit);
@@ -63,7 +63,7 @@ int	smart_sleep(t_param *param, long long time)
 		}
 		else
 			pthread_mutex_unlock(&param->exit);
-		if ((get_timestamp_milliseconds(param) - i) >= time)
+		if ((get_timestamp_milliseconds() - i) >= time)
 			return (0);
 		usleep (50);
 	}
