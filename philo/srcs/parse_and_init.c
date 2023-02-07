@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:42:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/07 11:42:41 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:22:58 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_variables(t_param *param, int argc, char **argv)
 	param->nb_philo_must_eat = -1;
 	if (argc == 6)
 		param->nb_philo_must_eat = philo_atoi(argv[5]);
-	param->start_time = get_timestamp_milliseconds(param);
+	param->start_time = get_timestamp_milliseconds();
 	param->philo_died = false;
 	param->nb_meals_reached = false;
 }
