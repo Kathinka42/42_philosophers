@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 12:00:11 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/01 16:35:13 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:04:48 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ void	check_death(t_param *param, int i)
 	if ((calculate_timestamp_milliseconds(param) - param->philo[i]->last_meal) \
 		> param->time_to_die)
 	{
-		pthread_mutex_unlock(&param->exit);
-		philo_print(param->philo[i], "died");
-		pthread_mutex_lock(&param->exit);
 		param->philo_died = true;
 		pthread_mutex_unlock(&param->exit);
+		philo_print(param->philo[i], "died");
 	}
 	else
 	{
