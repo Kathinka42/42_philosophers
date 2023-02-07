@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 11:36:41 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/07 11:52:01 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:18:16 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 *	microseconds since the last whole second.
 */
 
-long long	get_timestamp_milliseconds()
+long long	get_timestamp_milliseconds(void)
 {
 	struct timeval	current_time;
 	long long		milliseconds;
