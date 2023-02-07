@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:42:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/01 16:40:38 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:41:31 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 *	checks input from command line and returns error messages.
 */
 
-int	check_input(int argc, char **argv, t_param *param)
+int	check_input(int argc, char **argv)
 {
 	if (argc != 5 && argc != 6)
 	{
