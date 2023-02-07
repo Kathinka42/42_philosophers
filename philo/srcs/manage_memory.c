@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:49:47 by kczichow          #+#    #+#             */
-/*   Updated: 2023/02/01 16:51:29 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:31:01 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,5 @@ int	clean_up(t_param *param)
 	destroy_mutexes(param);
 	if (param)
 		free (param);
-	exit (0);
+	return (0);
 }
