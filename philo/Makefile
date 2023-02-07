@@ -6,7 +6,7 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 15:52:20 by kczichow          #+#    #+#              #
-#    Updated: 2023/02/06 16:02:18 by kczichow         ###   ########.fr        #
+#    Updated: 2023/02/07 11:40:34 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ SRCS_O		= $(addprefix $(OBJS_D)/, $(SRCS_F:%.c=%.o))
 
 # compilation rules and flags
 CC			= gcc -pthread -g
-# CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror
 
 #-fsanitize=address
 ifdef DEBUGG
